@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/animations/SmoothScroll";
 import PageTransition from "@/components/animations/PageTransition";
+import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -72,6 +73,7 @@ export default function RootLayout({
           </PageTransition>
           <Footer />
         </SmoothScroll>
+        <WhatsAppFloat />
       </body>
     </html>
   );

@@ -25,8 +25,11 @@ export const company = {
   established: 2020,
   director: { name: "Rajan Mishra", role: "Director" },
   contact: {
-    phone: "+91 98999 04738",
-    phoneAlt: "+91 9899904738",
+    phone: "+91 33 4062 9221",
+    phoneAlt: "+913340629221",
+    whatsapp: "+91 98999 04738",
+    whatsappAlt: "+919899904738",
+    whatsappDigits: "919899904738",
     email: "info@adventmaritime.com",
     directorEmail: "rajan@adventmaritime.com",
     website: "www.adventmaritime.com",
@@ -46,8 +49,123 @@ export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Network", href: "/network" },
-  { label: "Industries", href: "/industries" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Contact", href: "/contact" },
+];
+
+export type GalleryItem = {
+  src: string;
+  alt: string;
+  category: GalleryCategory;
+  aspect: "tall" | "wide" | "square";
+};
+
+export type GalleryCategory =
+  | "Vessels"
+  | "Ports"
+  | "Containers"
+  | "Operations"
+  | "Equipment";
+
+export const galleryCategories: GalleryCategory[] = [
+  "Vessels",
+  "Ports",
+  "Containers",
+  "Operations",
+  "Equipment",
+];
+
+export const galleryItems: GalleryItem[] = [
+  {
+    src: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?auto=format&fit=crop&w=1600&q=80",
+    alt: "Container ship at sea",
+    category: "Vessels",
+    aspect: "wide",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1200&q=80",
+    alt: "Container terminal",
+    category: "Ports",
+    aspect: "tall",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=1200&q=80",
+    alt: "Cargo containers stacked",
+    category: "Containers",
+    aspect: "square",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1200&q=80",
+    alt: "Port aerial view",
+    category: "Ports",
+    aspect: "wide",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1556139954-ec19cce61d61?auto=format&fit=crop&w=1200&q=80",
+    alt: "Logistics aerial",
+    category: "Operations",
+    aspect: "square",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=80",
+    alt: "Cargo handling",
+    category: "Operations",
+    aspect: "tall",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1200&q=80",
+    alt: "Port crane silhouette",
+    category: "Equipment",
+    aspect: "tall",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1613690399151-65ea69478674?auto=format&fit=crop&w=1200&q=80",
+    alt: "Container yard at dusk",
+    category: "Containers",
+    aspect: "wide",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1200&q=80",
+    alt: "Ship at sea",
+    category: "Vessels",
+    aspect: "square",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80",
+    alt: "Bulk cargo ship",
+    category: "Vessels",
+    aspect: "tall",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=1200&q=80",
+    alt: "Stacked containers close-up",
+    category: "Containers",
+    aspect: "wide",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1612277796100-86cfac0a6f01?auto=format&fit=crop&w=1200&q=80",
+    alt: "Cranes lifting cargo",
+    category: "Equipment",
+    aspect: "square",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
+    alt: "Warehouse interior",
+    category: "Operations",
+    aspect: "wide",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1570053594891-f4716e0a4060?auto=format&fit=crop&w=1200&q=80",
+    alt: "Port at dawn",
+    category: "Ports",
+    aspect: "square",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1554178286-db408c69256a?auto=format&fit=crop&w=1200&q=80",
+    alt: "Industrial port crane",
+    category: "Equipment",
+    aspect: "tall",
+  },
 ];
 
 export type Service = {
@@ -87,7 +205,7 @@ export const services: Service[] = [
       "Comprehensive freight forwarding for both ocean and air cargo, including door-to-door logistics, multimodal transportation, and seamless cross-border shipment coordination.",
     icon: Plane,
     image:
-      "https://images.unsplash.com/photo-1556139954-ec19cce61d61?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1556388158-158ea5ccacbd?auto=format&fit=crop&w=1600&q=80",
     features: [
       "Ocean Freight (Import & Export)",
       "Air Freight (Inbound & Outbound)",

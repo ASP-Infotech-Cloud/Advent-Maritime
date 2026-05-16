@@ -1,0 +1,12 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch();
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 });
+const page = await ctx.newPage();
+await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+await page.waitForTimeout(2000);
+await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" }));
+await page.waitForTimeout(2000);
+const footer = page.locator("footer").first();
+await footer.screenshot({ path: "./screenshots/footer-current.png" });
+await browser.close();
+console.log("done");

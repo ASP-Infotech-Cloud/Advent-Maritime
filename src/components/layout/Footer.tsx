@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, Globe } from "lucide-react";
-import Logo from "@/components/ui/Logo";
 import { company, services } from "@/lib/data";
 
 export default function Footer() {
@@ -26,8 +26,29 @@ export default function Footer() {
       <div className="container-x relative pt-28 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
           <div className="md:col-span-4">
-            <Logo className="h-12 w-auto" inverse />
-            <p className="mt-5 text-sm leading-relaxed text-navy-100/70 max-w-sm">
+            <Link
+              href="/"
+              aria-label="Advent Maritime"
+              className="inline-flex items-center gap-4"
+            >
+              <Image
+                src="/brand/logo-mark-white.png"
+                alt=""
+                width={120}
+                height={96}
+                priority
+                className="h-14 w-auto"
+              />
+              <span className="flex flex-col leading-none">
+                <span className="font-display text-3xl font-bold tracking-tight text-white">
+                  Advent
+                </span>
+                <span className="mt-1.5 text-[11px] font-semibold tracking-[0.4em] text-teal-400">
+                  MARITIME
+                </span>
+              </span>
+            </Link>
+            <p className="mt-6 text-sm leading-relaxed text-navy-100/70 max-w-sm">
               Established in {company.established}, Advent Maritime is a
               fast-growing NVOCC and freight forwarding company committed to
               reliable, cost-effective and customized logistics solutions for
@@ -73,7 +94,7 @@ export default function Footer() {
               <li><Link href="/about" className="link-underline">About</Link></li>
               <li><Link href="/services" className="link-underline">Services</Link></li>
               <li><Link href="/network" className="link-underline">Network</Link></li>
-              <li><Link href="/industries" className="link-underline">Industries</Link></li>
+              <li><Link href="/gallery" className="link-underline">Gallery</Link></li>
               <li><Link href="/contact" className="link-underline">Contact</Link></li>
             </ul>
           </div>
