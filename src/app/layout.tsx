@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/animations/SmoothScroll";
-import PageTransition from "@/components/animations/PageTransition";
 import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 import PageLoader from "@/components/ui/PageLoader";
 
@@ -70,9 +69,7 @@ export default function RootLayout({
         <PageLoader />
         <SmoothScroll>
           <Header />
-          <PageTransition>
-            <main className="min-h-screen">{children}</main>
-          </PageTransition>
+          <main className="min-h-screen">{children}</main>
           <Footer />
         </SmoothScroll>
         <WhatsAppFloat />

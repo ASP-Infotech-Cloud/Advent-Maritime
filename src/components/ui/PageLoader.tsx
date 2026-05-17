@@ -1,36 +1,117 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-const MIN_DISPLAY_MS = 1100;
+const INITIAL_MIN_MS = 1100;
+const TRANSITION_HIDE_MS = 650;
 
 export default function PageLoader() {
+  const pathname = usePathname();
   const [loading, setLoading] = useState(true);
+  const isInitialRef = useRef(true);
+  const prevPathRef = useRef<string | null>(null);
+  const hideTimerRef = useRef<number | null>(null);
 
+  // -------------------- Initial page load --------------------
   useEffect(() => {
     const start = performance.now();
-
     const finish = () => {
       const elapsed = performance.now() - start;
-      const remaining = Math.max(0, MIN_DISPLAY_MS - elapsed);
-      setTimeout(() => setLoading(false), remaining);
+      const remaining = Math.max(0, INITIAL_MIN_MS - elapsed);
+      window.setTimeout(() => {
+        setLoading(false);
+        isInitialRef.current = false;
+        prevPathRef.current = window.location.pathname;
+      }, remaining);
     };
 
     if (document.readyState === "complete") {
       finish();
     } else {
       window.addEventListener("load", finish, { once: true });
-      // Safety fallback in case "load" never fires (slow images etc.)
-      const fallback = setTimeout(finish, 4000);
+      const safety = window.setTimeout(finish, 4000);
       return () => {
         window.removeEventListener("load", finish);
-        clearTimeout(fallback);
+        window.clearTimeout(safety);
       };
     }
   }, []);
 
-  // Lock body scroll while visible
+  // -------------------- Show loader on link click --------------------
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      // Ignore modified clicks
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (e.button !== 0) return;
+
+      const target = e.target as HTMLElement | null;
+      const link = target?.closest("a") as HTMLAnchorElement | null;
+      if (!link) return;
+
+      const href = link.getAttribute("href");
+      if (!href) return;
+      // Skip non-navigations
+      if (
+        href.startsWith("#") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        href.startsWith("javascript:") ||
+        link.target === "_blank" ||
+        link.hasAttribute("download")
+      ) {
+        return;
+      }
+      // Only handle internal absolute paths
+      if (!href.startsWith("/") || href.startsWith("//")) return;
+
+      // Skip if it's the current page
+      try {
+        const url = new URL(link.href, window.location.href);
+        if (
+          url.pathname === window.location.pathname &&
+          url.search === window.location.search
+        ) {
+          return;
+        }
+      } catch {
+        return;
+      }
+
+      // Show loader immediately
+      if (hideTimerRef.current) {
+        window.clearTimeout(hideTimerRef.current);
+        hideTimerRef.current = null;
+      }
+      setLoading(true);
+    }
+
+    document.addEventListener("click", handleClick, true);
+    return () => document.removeEventListener("click", handleClick, true);
+  }, []);
+
+  // -------------------- Hide loader when new route is mounted --------------------
+  useEffect(() => {
+    if (isInitialRef.current) return;
+    if (prevPathRef.current === pathname) return;
+    prevPathRef.current = pathname;
+
+    if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = window.setTimeout(() => {
+      setLoading(false);
+      hideTimerRef.current = null;
+    }, TRANSITION_HIDE_MS);
+
+    return () => {
+      if (hideTimerRef.current) {
+        window.clearTimeout(hideTimerRef.current);
+        hideTimerRef.current = null;
+      }
+    };
+  }, [pathname]);
+
+  // -------------------- Lock body scroll while visible --------------------
   useEffect(() => {
     if (loading) {
       document.body.style.overflow = "hidden";
@@ -42,13 +123,20 @@ export default function PageLoader() {
     };
   }, [loading]);
 
+  // -------------------- Scroll new page to top --------------------
+  useEffect(() => {
+    if (isInitialRef.current) return;
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [pathname]);
+
   return (
     <AnimatePresence>
       {loading && (
         <motion.div
+          key="page-loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
+          transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
           className="fixed inset-0 z-[200] flex items-center justify-center bg-navy-900 overflow-hidden"
           aria-hidden
         >
@@ -60,7 +148,6 @@ export default function PageLoader() {
 
           {/* Center stack */}
           <div className="relative flex flex-col items-center">
-            {/* Concentric pulsing rings around the mark */}
             <div className="relative flex items-center justify-center">
               <motion.span
                 className="absolute h-32 w-32 rounded-full border border-teal-400/30"
@@ -91,7 +178,6 @@ export default function PageLoader() {
               </div>
             </div>
 
-            {/* Wordmark */}
             <div className="mt-7 flex flex-col items-center">
               <span className="font-display text-2xl font-bold tracking-tight text-white">
                 Advent
@@ -101,7 +187,6 @@ export default function PageLoader() {
               </span>
             </div>
 
-            {/* Progress bar */}
             <div className="mt-10 h-[3px] w-44 overflow-hidden rounded-full bg-white/10">
               <motion.div
                 className="h-full bg-gradient-to-r from-teal-500 via-cyan to-teal-400"
@@ -120,7 +205,6 @@ export default function PageLoader() {
             </p>
           </div>
 
-          {/* Bottom wave SVG */}
           <svg
             className="absolute inset-x-0 bottom-0 w-full opacity-40"
             viewBox="0 0 1440 120"
