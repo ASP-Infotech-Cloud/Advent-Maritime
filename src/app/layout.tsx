@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/animations/SmoothScroll";
 import PageTransition from "@/components/animations/PageTransition";
 import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
+import PageLoader from "@/components/ui/PageLoader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -66,6 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${display.variable}`}>
       <body className="font-sans antialiased">
+        <PageLoader />
         <SmoothScroll>
           <Header />
           <PageTransition>

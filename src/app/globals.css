@@ -19,11 +19,14 @@
   }
 
   body {
-    background: #fff;
+    background: #0B1320;
     color: var(--navy-deep);
     font-feature-settings: "ss01", "cv01";
     overflow-x: hidden;
   }
+
+  /* Each page is wrapped in a white card by individual sections, but to keep
+     things consistent during scroll we set main backgrounds explicitly. */
 
   ::selection {
     background: var(--teal);
