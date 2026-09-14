@@ -132,7 +132,7 @@ export default function GalleryGrid() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.35 }}
-              className="relative w-full max-w-5xl aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-5xl aspect-[16/10] rounded-2xl overflow-hidden bg-navy-950 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <Image
@@ -140,7 +140,7 @@ export default function GalleryGrid() {
                 alt={items[lightbox].alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 80vw"
-                className="object-cover"
+                className="object-contain"
                 priority
               />
               <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-navy-900/90 to-transparent">

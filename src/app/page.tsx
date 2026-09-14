@@ -4,7 +4,7 @@ import Services from "@/components/home/Services";
 import Stats from "@/components/home/Stats";
 import Network from "@/components/home/Network";
 import WhyUs from "@/components/home/WhyUs";
-import Industries from "@/components/home/Industries";
+import Clients from "@/components/home/Clients";
 import CTA from "@/components/home/CTA";
 import Marquee from "@/components/ui/Marquee";
 
@@ -18,7 +18,7 @@ export default function Home() {
       <Stats />
       <Network />
       <WhyUs />
-      <Industries />
+      <Clients />
       <CTA />
     </>
   );

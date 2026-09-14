@@ -50,7 +50,7 @@ export default function ServiceDetailPage({ params }: Props) {
           <div className="lg:col-span-7">
             <div className="relative aspect-[16/10] rounded-3xl overflow-hidden">
               <Image
-                src={service.image}
+                src={service.imageWide}
                 alt={service.title}
                 fill
                 sizes="(max-width: 1024px) 100vw, 60vw"

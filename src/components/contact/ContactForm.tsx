@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { AlertCircle, CheckCircle2, MessageCircle } from "lucide-react";
+import { company } from "@/lib/data";
 
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "success" | "error";
 
 const services = [
   "NVOCC Services",
@@ -16,39 +17,55 @@ const services = [
   "Other",
 ];
 
+const WHATSAPP_URL = `https://wa.me/${company.contact.whatsappDigits}`;
+
+/** Turns the filled-in fields into a readable WhatsApp message. */
+function buildMessage(data: FormData) {
+  const get = (key: string) => (data.get(key) as string | null)?.trim() || "";
+
+  const lines = [
+    "New enquiry from adventmaritime.com",
+    "",
+    `Name: ${get("name")}`,
+  ];
+
+  const optional: Array<[string, string]> = [
+    ["Company", get("company")],
+    ["Email", get("email")],
+    ["Phone", get("phone")],
+    ["Service required", get("service")],
+    ["Origin", get("origin")],
+    ["Destination", get("destination")],
+  ];
+  for (const [label, value] of optional) {
+    if (value) lines.push(`${label}: ${value}`);
+  }
+
+  lines.push("", "Message:", get("message"));
+  return lines.join("\n");
+}
+
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("submitting");
-    setErrorMsg(null);
 
-    const formData = new FormData(e.currentTarget);
-    const accessKey =
-      process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
-      "YOUR_WEB3FORMS_ACCESS_KEY_HERE";
-    formData.append("access_key", accessKey);
-    formData.append("subject", "New enquiry from adventmaritime.com");
-    formData.append("from_name", "Advent Maritime Website");
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setStatus("success");
-        (e.target as HTMLFormElement).reset();
-      } else {
-        setStatus("error");
-        setErrorMsg(data.message || "Something went wrong. Please try again.");
-      }
-    } catch {
+    // Honeypot — ignore silently if a bot ticked the hidden box.
+    if (formData.get("botcheck")) return;
+
+    const url = `${WHATSAPP_URL}?text=${encodeURIComponent(buildMessage(formData))}`;
+    const opened = window.open(url, "_blank", "noopener,noreferrer");
+
+    if (opened) {
+      setStatus("success");
+      form.reset();
+    } else {
+      // Pop-up blocked — offer the link instead of losing the enquiry.
       setStatus("error");
-      setErrorMsg("Network error. Please try again.");
     }
   }
 
@@ -137,20 +154,14 @@ export default function ContactForm() {
       <div className="pt-2">
         <button
           type="submit"
-          disabled={status === "submitting"}
-          className="group inline-flex items-center gap-3 rounded-full bg-navy-700 px-7 py-4 text-sm font-semibold text-white transition-all hover:bg-navy-800 hover:gap-4 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="group inline-flex items-center gap-3 rounded-full bg-navy-700 px-7 py-4 text-sm font-semibold text-white transition-all hover:bg-navy-800 hover:gap-4"
         >
-          {status === "submitting" ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Sending…
-            </>
-          ) : (
-            <>
-              Send Enquiry
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </>
-          )}
+          <MessageCircle className="h-4 w-4" />
+          Send on WhatsApp
         </button>
+        <p className="mt-3 text-xs text-navy-700/60">
+          Your enquiry opens in WhatsApp, ready to send to our team.
+        </p>
       </div>
 
       <AnimatePresence>
@@ -163,8 +174,11 @@ export default function ContactForm() {
           >
             <CheckCircle2 className="h-5 w-5 shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold">Thank you — we&apos;ve received your enquiry.</p>
-              <p className="mt-1">Our team will get back to you within 24 hours.</p>
+              <p className="font-semibold">WhatsApp is open with your enquiry.</p>
+              <p className="mt-1">
+                Press send in WhatsApp and our team will get back to you within
+                24 hours.
+              </p>
             </div>
           </motion.div>
         )}
@@ -177,8 +191,19 @@ export default function ContactForm() {
           >
             <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold">Couldn&apos;t send your message.</p>
-              <p className="mt-1">{errorMsg}</p>
+              <p className="font-semibold">Your browser blocked the WhatsApp window.</p>
+              <p className="mt-1">
+                Allow pop-ups for this site, or message us directly at{" "}
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline"
+                >
+                  {company.contact.whatsapp}
+                </a>
+                .
+              </p>
             </div>
           </motion.div>
         )}

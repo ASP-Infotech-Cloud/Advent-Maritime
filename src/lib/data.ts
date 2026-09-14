@@ -9,12 +9,6 @@ import {
   Truck,
   Globe2,
   PackageCheck,
-  Sprout,
-  Factory,
-  FlaskConical,
-  Shirt,
-  Wrench,
-  ShoppingBasket,
   type LucideIcon,
 } from "lucide-react";
 
@@ -77,12 +71,6 @@ export const galleryCategories: GalleryCategory[] = [
 
 export const galleryItems: GalleryItem[] = [
   {
-    src: "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?auto=format&fit=crop&w=1600&q=80",
-    alt: "Container ship at sea",
-    category: "Vessels",
-    aspect: "wide",
-  },
-  {
     src: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1200&q=80",
     alt: "Container terminal",
     category: "Ports",
@@ -95,76 +83,52 @@ export const galleryItems: GalleryItem[] = [
     aspect: "square",
   },
   {
+    src: "https://images.unsplash.com/photo-1613690399151-65ea69478674?auto=format&fit=crop&w=1200&q=80",
+    alt: "Container ship at sea",
+    category: "Vessels",
+    aspect: "wide",
+  },
+  {
     src: "https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1200&q=80",
-    alt: "Port aerial view",
+    alt: "Container yard from above",
     category: "Ports",
     aspect: "wide",
   },
   {
-    src: "https://images.unsplash.com/photo-1556139954-ec19cce61d61?auto=format&fit=crop&w=1200&q=80",
-    alt: "Logistics aerial",
-    category: "Operations",
-    aspect: "square",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1577416412292-747c6607f055?auto=format&fit=crop&w=1200&q=80",
-    alt: "Cargo handling",
-    category: "Operations",
-    aspect: "tall",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1200&q=80",
-    alt: "Port crane silhouette",
-    category: "Equipment",
-    aspect: "tall",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1613690399151-65ea69478674?auto=format&fit=crop&w=1200&q=80",
-    alt: "Container yard at dusk",
-    category: "Containers",
-    aspect: "wide",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1200&q=80",
-    alt: "Ship at sea",
+    src: "/services/freight-forwarding.jpg",
+    alt: "Ocean and air freight at port",
     category: "Vessels",
     aspect: "square",
   },
   {
-    src: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80",
-    alt: "Bulk cargo ship",
-    category: "Vessels",
-    aspect: "tall",
+    src: "/services/nvocc.jpg",
+    alt: "Container handling crane",
+    category: "Equipment",
+    aspect: "square",
   },
   {
-    src: "https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=1200&q=80",
-    alt: "Stacked containers close-up",
+    src: "/services/nvocc-wide.jpg",
+    alt: "Stacked shipping containers",
     category: "Containers",
     aspect: "wide",
   },
   {
-    src: "https://images.unsplash.com/photo-1612277796100-86cfac0a6f01?auto=format&fit=crop&w=1200&q=80",
-    alt: "Cranes lifting cargo",
+    src: "/services/transport.jpg",
+    alt: "Container haulage by road",
     category: "Equipment",
+    aspect: "tall",
+  },
+  {
+    src: "/services/warehouse.jpg",
+    alt: "Warehouse operations",
+    category: "Operations",
     aspect: "square",
   },
   {
     src: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
-    alt: "Warehouse interior",
+    alt: "Warehouse racking and storage",
     category: "Operations",
     aspect: "wide",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1570053594891-f4716e0a4060?auto=format&fit=crop&w=1200&q=80",
-    alt: "Port at dawn",
-    category: "Ports",
-    aspect: "square",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1554178286-db408c69256a?auto=format&fit=crop&w=1200&q=80",
-    alt: "Industrial port crane",
-    category: "Equipment",
-    aspect: "tall",
   },
 ];
 
@@ -175,6 +139,8 @@ export type Service = {
   description: string;
   icon: LucideIcon;
   image: string;
+  /** Landscape crop used for the wide hero on the service detail page. */
+  imageWide: string;
   features: string[];
 };
 
@@ -186,8 +152,8 @@ export const services: Service[] = [
     description:
       "End-to-end ocean container solutions with strong coverage across Far East and Middle East trade lanes. We handle FCL and LCL movements, consolidation, and issue our own House Bills of Lading.",
     icon: Ship,
-    image:
-      "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?auto=format&fit=crop&w=1600&q=80",
+    image: "/services/nvocc.jpg",
+    imageWide: "/services/nvocc-wide.jpg",
     features: [
       "FCL (Full Container Load) movements",
       "LCL (Less than Container Load) consolidation",
@@ -204,8 +170,8 @@ export const services: Service[] = [
     description:
       "Comprehensive freight forwarding for both ocean and air cargo, including door-to-door logistics, multimodal transportation, and seamless cross-border shipment coordination.",
     icon: Plane,
-    image:
-      "https://images.unsplash.com/photo-1556388158-158ea5ccacbd?auto=format&fit=crop&w=1600&q=80",
+    image: "/services/freight-forwarding.jpg",
+    imageWide: "/services/freight-forwarding.jpg",
     features: [
       "Ocean Freight (Import & Export)",
       "Air Freight (Inbound & Outbound)",
@@ -222,8 +188,8 @@ export const services: Service[] = [
     description:
       "A complete suite of allied services that complement our core logistics — from customs clearance and DG cargo handling to warehousing, distribution, and full trade documentation support.",
     icon: ShieldCheck,
-    image:
-      "https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=1600&q=80",
+    image: "/services/warehouse.jpg",
+    imageWide: "/services/transport.jpg",
     features: [
       "Customs Clearance (Import & Export)",
       "DG (Dangerous Goods) cargo handling",
@@ -242,64 +208,6 @@ export const valueAdded = [
   { title: "Warehousing", icon: Warehouse },
   { title: "Multimodal", icon: Truck },
   { title: "Compliance", icon: PackageCheck },
-];
-
-export type Industry = {
-  name: string;
-  icon: LucideIcon;
-  image: string;
-  description: string;
-};
-
-export const industries: Industry[] = [
-  {
-    name: "FMCG",
-    icon: ShoppingBasket,
-    image:
-      "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Fast-moving consumer goods with strict timelines and temperature considerations.",
-  },
-  {
-    name: "Agriculture",
-    icon: Sprout,
-    image:
-      "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Bulk grains, produce, and agricultural commodities — domestic and export.",
-  },
-  {
-    name: "Steel & Metal",
-    icon: Factory,
-    image:
-      "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Heavy and oversized cargo, coils, billets and structural steel movement.",
-  },
-  {
-    name: "Chemicals",
-    icon: FlaskConical,
-    image:
-      "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Hazardous and non-hazardous chemicals with full DG documentation.",
-  },
-  {
-    name: "Textiles",
-    icon: Shirt,
-    image:
-      "https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Garments, fabrics and textile exports with consolidation expertise.",
-  },
-  {
-    name: "Engineering & Machinery",
-    icon: Wrench,
-    image:
-      "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Industrial machinery, project cargo and engineering exports worldwide.",
-  },
 ];
 
 export type Office = {
@@ -364,6 +272,24 @@ export const stats = [
   { value: 3, suffix: "", label: "International Hubs" },
   { value: 6, suffix: "", label: "Industries Served" },
   { value: 100, suffix: "%", label: "Commitment" },
+];
+
+export type Client = {
+  /** Logo file in /public/clients. */
+  src: string;
+  /** Accessible description only — names are not printed next to the logos. */
+  alt: string;
+  /** Logos supplied on a dark background get no white card behind them. */
+  dark?: boolean;
+};
+
+export const clients: Client[] = [
+  { src: "/clients/bathco.jpg", alt: "Bathco" },
+  { src: "/clients/movestone.jpg", alt: "Movestone", dark: true },
+  { src: "/clients/affival.jpg", alt: "Affival, an OPTA Group company" },
+  { src: "/clients/opta.jpg", alt: "OPTA Group" },
+  { src: "/clients/cp-group.jpg", alt: "C.P. Group" },
+  { src: "/clients/globe.jpg", alt: "Client logo" },
 ];
 
 export const marqueeItems = [

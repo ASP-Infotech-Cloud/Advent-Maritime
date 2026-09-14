@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import CTA from "@/components/home/CTA";
+import Clients from "@/components/home/Clients";
 import Stats from "@/components/home/Stats";
 import { company } from "@/lib/data";
 import { Anchor, ShieldCheck, Globe2, PackageCheck, Compass } from "lucide-react";
@@ -167,15 +168,15 @@ export default function AboutPage() {
         <div className="container-x">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5">
-              <div className="relative aspect-square rounded-3xl overflow-hidden bg-navy-900">
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-white">
                 <Image
-                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80"
-                  alt="Director Rajan Mishra"
+                  src="/team/rajan-mishra.jpg"
+                  alt={`${company.director.name}, ${company.director.role}`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover opacity-90"
+                  className="object-cover object-top"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/40 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-navy-900 via-navy-900/70 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <p className="font-display text-2xl text-white">
                     {company.director.name}
@@ -205,6 +206,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <Clients />
 
       <CTA />
     </>

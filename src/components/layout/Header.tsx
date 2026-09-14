@@ -26,15 +26,15 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 bg-white/90 backdrop-blur-md transition-shadow duration-500 ${
         scrolled
-          ? "bg-white/85 backdrop-blur-md shadow-[0_1px_0_rgba(11,19,32,0.06)]"
-          : "bg-transparent"
+          ? "shadow-[0_1px_0_rgba(11,19,32,0.06),0_8px_24px_-16px_rgba(11,19,32,0.25)]"
+          : "shadow-[0_1px_0_rgba(11,19,32,0.06)]"
       }`}
     >
       <div className="container-x flex h-20 items-center justify-between">
         <Link href="/" className="relative flex items-center" aria-label="Advent Maritime home">
-          <Logo className="h-9 w-auto md:h-10" inverse={!scrolled} />
+          <Logo className="h-9 w-auto md:h-10" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">
@@ -43,26 +43,21 @@ export default function Header() {
               link.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
-            const baseColor = scrolled
-              ? isActive
-                ? "text-navy-700"
-                : "text-navy-600/80 hover:text-navy-700"
-              : isActive
-              ? "text-white"
-              : "text-white/75 hover:text-white";
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${baseColor}`}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-navy-700"
+                    : "text-navy-600/80 hover:text-navy-700"
+                }`}
               >
                 {link.label}
                 {isActive && (
                   <motion.span
                     layoutId="nav-pill"
-                    className={`absolute inset-0 -z-10 rounded-full ${
-                      scrolled ? "bg-teal-500/10" : "bg-white/15"
-                    }`}
+                    className="absolute inset-0 -z-10 rounded-full bg-teal-500/10"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -74,22 +69,14 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <a
             href={`tel:${company.contact.phoneAlt.replace(/\s/g, "")}`}
-            className={`hidden md:inline-flex items-center gap-2 text-sm font-medium transition-colors ${
-              scrolled
-                ? "text-navy-700 hover:text-teal-600"
-                : "text-white/80 hover:text-teal-300"
-            }`}
+            className="hidden md:inline-flex items-center gap-2 text-sm font-medium text-navy-700 transition-colors hover:text-teal-600"
           >
             <Phone className="h-4 w-4" />
             {company.contact.phone}
           </a>
           <Link
             href="/contact"
-            className={`hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:gap-3 ${
-              scrolled
-                ? "bg-navy-700 text-white hover:bg-navy-800"
-                : "bg-teal-500 text-white hover:bg-teal-400"
-            }`}
+            className="hidden md:inline-flex items-center gap-2 rounded-full bg-navy-700 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:gap-3 hover:bg-navy-800"
           >
             Get a Quote
           </Link>
@@ -97,11 +84,7 @@ export default function Header() {
             type="button"
             aria-label="Toggle menu"
             onClick={() => setOpen((s) => !s)}
-            className={`lg:hidden inline-flex items-center justify-center rounded-full p-2.5 ${
-              scrolled
-                ? "border border-navy-600/20 text-navy-700"
-                : "border border-white/25 text-white"
-            }`}
+            className="lg:hidden inline-flex items-center justify-center rounded-full border border-navy-600/20 p-2.5 text-navy-700"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
